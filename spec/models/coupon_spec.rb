@@ -19,4 +19,24 @@ RSpec.describe Coupon, type: :model do
                                                 is_greater_than_or_equal_to(0) }
 
   it { is_expected.to validate_presence_of(:due_date) }
+
+  context "due_date" do
+    it "can't be a past date" do
+      subject.due_date = 1.day.ago
+      subject.valid?
+      expect(subject.errors.keys).to include :due_date
+    end
+
+    it "can't be a current date" do
+      subject.due_date = Time.zone.now
+      subject.valid?
+      expect(subject.errors.keys).to include :due_date
+    end
+
+    it "should be valid when the date is in the future" do
+      subject.due_date = Time.zone.now + 1.day
+      subject.valid?
+      expect(subject.errors.keys).to_not include :due_date
+    end
+  end
 end

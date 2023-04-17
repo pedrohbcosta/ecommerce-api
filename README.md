@@ -1,24 +1,5 @@
-# README
+# E-Commerce API with Ruby on Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is currently being developed during the One Bit Code Advanced Bootcamp.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To develop this project, we used the techs like rspec-rails, shoulda-matchers, factory_bot_rails, devise_token_auth, rack-cors and some other tools.
