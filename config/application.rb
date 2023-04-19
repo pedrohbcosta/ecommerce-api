@@ -38,6 +38,7 @@ module EcommerceApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # Path to custom validators 
     config.autoload_paths += %W["#{config.root}/app/validators/"]
   end
 end
