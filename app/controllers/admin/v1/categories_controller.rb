@@ -8,7 +8,13 @@ module Admin::V1
     def create
       @category = Category.new
       @category.attributes = category_params
-      category_save!
+      save_category!
+    end
+
+    def update
+      @category = Category.find(params[:id])
+      @category.attributes = category_params
+      save_category!
     end
 
     private
@@ -18,7 +24,7 @@ module Admin::V1
       params.require(:category).permit(:id, :name)
     end
 
-    def category_save!
+    def save_category!
       @category.save!
       render :show
     rescue
