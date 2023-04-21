@@ -116,7 +116,7 @@ RSpec.describe "Admin::V1::Categories", type: :request do
     end
   end
 
-  context "DELETE /categories" do
+  context "DELETE /categories/:id" do
     let!(:category) { create(:category) }
     let(:url) { "/admin/v1/categories/#{category.id}" }
 
