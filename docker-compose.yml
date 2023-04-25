@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  ecommerce-api_rails:
+    build: .
+    image: ecommerce-api_example
+    container_name: ecommerce-api_rails
+    command: bash -c "rails db:migrate && rails server -b 0.0.0.0"
+    ports:
+      - 3000:3000
+    environment:
+      DB_URL: postgres://db/ecommerce-api
+    volumes:
+      - .:/ecommerce-api
+    depends_on:
+      - ecommerce-api_db
+    restart: on-failure
+
+  ecommerce-api_db:
+    image: postgres
+    container_name: ecommerce-api_db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=ecommerce
+      - POSTGRES_DB=ecommerce-api
+    volumes:
+      - ecommerce-api_db:/data/postgres
+
+volumes:
+  ecommerce-api_db:
+    driver: local
