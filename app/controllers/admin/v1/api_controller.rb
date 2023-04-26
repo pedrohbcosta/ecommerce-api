@@ -4,14 +4,10 @@ module Admin::V1
 
     include Authenticable
 
-    before_action :restrict_access_for_admin!
+    include SimpleErrorRenderable
+    self.simple_error_partial = "shared/simple_error"
 
-    def render_error(message: nil, fields: nil, status: :unprocessable_entity)
-      errors = {}
-      errors['fields'] = fields if fields.present?
-      errors['message'] = message if message.present?
-      render json: { errors: errors }, status: status
-    end
+    before_action :restrict_access_for_admin!
 
     rescue_from ForbiddenAcess do
       render_error(message: "Forbidden access", status: :forbidden)
