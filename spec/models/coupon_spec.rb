@@ -20,6 +20,9 @@ RSpec.describe Coupon, type: :model do
 
   it { is_expected.to validate_presence_of(:due_date) }
 
+  it_behaves_like "name searchable concern", :coupon
+  it_behaves_like "paginatable concern", :coupon
+
   context "due_date" do
     it "can't be a past date" do
       subject.due_date = 1.day.ago
