@@ -1,9 +1,13 @@
 FROM ruby:2.7.1
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essential apt-utils ghostscript
+RUN apt-get update -qq && apt-get install -y libssl-dev libpq-dev postgresql
+RUN gem install bundler -v 2.1.4
+RUN mkdir /ecommerce_api
 WORKDIR /ecommerce_api
 COPY Gemfile /ecommerce_api/Gemfile
 COPY Gemfile.lock /ecommerce_api/Gemfile.lock
 RUN bundle install
+COPY . /ecommerce_api
 
 
 # Add a script to be executed every time the container starts.
