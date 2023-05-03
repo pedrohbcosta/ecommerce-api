@@ -1,43 +1,45 @@
 version: '3.8'
 
 services:
+  db:
+    image: postgres:latest
+    container_name: ecommerce-api_db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      # - ECOMMERCE_API_DATABASE_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    networks:
+      - ecommerce-api_bridge
+
   ecommerce-api_rails:
     build: 
       context: .
       dockerfile: ./Dockerfile
     image: ecommerce-api_example
     container_name: ecommerce-api_rails
-    command: bash -c "rails db:migrate && rails server -b 0.0.0.0"
+    # command: bash -c "rails db:migrate && rails server -b 0.0.0.0"
     ports:
       - 3000:3000
     environment:
-      HOSTNAME: ecommerce-api_rails
-      DB_URL: postgres://db/ecommerce-api
+      # DATABASE_URL: postgres://db/ecommerce-api
+      # - ECOMMERCE_API_DATABASE_PASSWORD=password
+      - ECOMMERCE_API_DATABASE_HOST=db
+      # - HOSTNAME=ecommerce-api_rails
+      # - SERVICE_NAME=ecommerce-api
     volumes:
       - .:/ecommerce-api
     depends_on:
-      - ecommerce-api_db
+      - db
     restart: on-failure
     networks:
       - ecommerce-api_bridge
 
-  ecommerce-api_db:
-    image: postgres
-    container_name: ecommerce-api_db
-    restart: always
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=<%= ENV['ECOMMERCE_API_DATABASE_USER'] %>
-      - POSTGRES_PASSWORD=<%= ENV['ECOMMERCE_API_DATABASE_PASSWORD'] %>
-      - POSTGRES_DB=ecommerce-api_db
-    volumes:
-      - ecommerce-api_db:/data/postgres
-    networks:
-      - ecommerce-api_bridge
-
 volumes:
-  ecommerce-api_db:
+  db:
 
 networks:
   ecommerce-api_bridge:
