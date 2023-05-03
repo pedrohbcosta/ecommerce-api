@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # host: ecommerce-api_db
+  host: <%= ENV['ECOMMERCE_API_DATABASE_HOST'] %>
   user: <%= ENV['ECOMMERCE_API_DATABASE_USER'] %>
   password: <%= ENV['ECOMMERCE_API_DATABASE_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>

@@ -1,6 +1,6 @@
 FROM ruby:2.7.1
 RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essential apt-utils ghostscript
-RUN apt-get update -qq && apt-get install -y libssl-dev libpq-dev postgresql
+RUN apt-get update -qq && apt-get install -y libssl-dev libpq-dev postgresql-client 
 RUN gem install bundler -v 2.1.4
 RUN mkdir /ecommerce_api
 WORKDIR /ecommerce_api
